@@ -1,0 +1,8 @@
+saved_models/*
+captured_images/**
+**/junk/**
+**/__pycache__
+logs/**
+**/VOCdevkit/**
+venv/**
+

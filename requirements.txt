@@ -1,0 +1,11 @@
+keras_core==0.1.7
+keras_cv==0.9.0
+matplotlib==3.9.1
+numpy==2.0.1
+opencv_python==4.10.0.84
+pandas==2.2.2
+Pillow==10.4.0
+plotly==5.23.0
+streamlit==1.36.0
+tensorflow==2.17.0
+torchvision==0.18.1
