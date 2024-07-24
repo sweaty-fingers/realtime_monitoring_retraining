@@ -3,6 +3,6 @@ captured_images/**
 **/junk/**
 **/__pycache__
 logs/**
-**/VOCdevkit/**
+retraining/data/**/data/
 venv/**
 
