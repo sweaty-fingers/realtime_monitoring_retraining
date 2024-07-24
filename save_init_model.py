@@ -2,7 +2,7 @@ import os
 import torch
 import torchvision
 
-TEST_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saved_models", "test")
+TEST_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saved_models", "torch")
 
 def deeplabmobilenetv3(dir=None, num_classes=21):
     if dir is None:
@@ -17,7 +17,7 @@ def deeplabmobilenetv3(dir=None, num_classes=21):
     if num_classes != 21:
         model.classifier[4] = torch.nn.Conv2d(256, num_classes, kernel_size=1)
 
-    torch.save(model.state_dict(), os.path.join(dir, "mobilenetv3_test.pth"))
+    torch.save(model.state_dict(), os.path.join(dir, "mobilenetv3.pth"))
 
 def deeplabresnet101(dir=None, num_classes=21):
     if dir is None:
@@ -32,8 +32,8 @@ def deeplabresnet101(dir=None, num_classes=21):
     if num_classes != 21:
         model.classifier[4] = torch.nn.Conv2d(256, num_classes, kernel_size=1)
 
-    torch.save(model.state_dict(), os.path.join(dir, "deeplabv3_test.pth"))
+    torch.save(model.state_dict(), os.path.join(dir, "deeplabv3.pth"))
 
 if __name__ == "__main__":
-    # deeplabmobilenetv3()
+    deeplabmobilenetv3()
     deeplabresnet101()

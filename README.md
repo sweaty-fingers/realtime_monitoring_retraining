@@ -49,5 +49,6 @@ pipreqs --encoding=utf8 {directory}
 ```
 
 초기 모델은 save_models/save_init_model.py 에서 실행 (경로 설정)
+처음 시작시 VOC data가 없으면 VOCSubset클래스의 download=True로 설정해서 한번 수행하기
 
 

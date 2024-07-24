@@ -31,7 +31,7 @@ capture_interval = 2
 latest_count = 20
 
 # 필터 적용할 타켓 클래스
-TARGET_CLASSES = [15, 12, 13]
+TARGET_CLASSES = [i for i in range(1, 22)]
 # 초기 필터 상태
 current_filter = 'Normal'
 

@@ -14,7 +14,7 @@ import random
 from retraining.models.torch.mobilenetv3 import ImageSegmenationMobilenetV3, INPUT_SHAPE
 
 class VOCSubset(Dataset):
-    def __init__(self, root=None, year='2012', image_set='train', download=False, transform=None, target_transform=None, subset_size=50):
+    def __init__(self, root=None, year='2012', image_set='train', download=False, transform=None, target_transform=None, subset_size=5):
         if root is None:
             root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
