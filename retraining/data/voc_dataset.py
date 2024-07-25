@@ -44,16 +44,15 @@ def mask_transform(mask, input_shape):
 
 
 if __name__ == "__main__":
-    custom_dataset = VOCSubset()
-
-    idx = 3
-    image, mask = custom_dataset[idx]
-    print(f"len data: {len(custom_dataset)}")
-    print(f"idx: {idx}")
-    print(f"image: {image}")
-    print(f"mask: {mask}")
-    print(f"image shape: {image.shape}")
-    print(f"mask shape: {mask.shape}")
-    plt.imshow(mask.squeeze(), cmap='gray')
-    plt.title('Label Mask')
-    plt.show()
+    custom_dataset = VOCSubset(download=True)
+    # idx = 3
+    # image, mask = custom_dataset[idx]
+    # print(f"len data: {len(custom_dataset)}")
+    # print(f"idx: {idx}")
+    # print(f"image: {image}")
+    # print(f"mask: {mask}")
+    # print(f"image shape: {image.shape}")
+    # print(f"mask shape: {mask.shape}")
+    # plt.imshow(mask.squeeze(), cmap='gray')
+    # plt.title('Label Mask')
+    # plt.show()

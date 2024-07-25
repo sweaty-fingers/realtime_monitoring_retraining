@@ -14,9 +14,9 @@ ROOT_DIR = str((Path(os.path.abspath(__file__)).parents[3]))
 LOG_PATH = os.path.join(ROOT_DIR, "logs", "realtime_monitoring", "old_model_log.csv")
 RETRAINING_SCRIPT_PATH = os.path.join(ROOT_DIR, "retraining", "training", "training.py")
 
-MAX_POINTS = 15
-ALERT_THRESHOLD = 1
-MIN_EMAIL = 3
+MAX_POINTS = 30
+ALERT_THRESHOLD = 0.95
+MIN_EMAIL = 20
 
 def run_script(path):
     with st.spinner("Running the script..."):
