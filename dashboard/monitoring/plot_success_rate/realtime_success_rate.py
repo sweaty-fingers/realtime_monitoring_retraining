@@ -56,7 +56,7 @@ class RealTimeSuccessRate(EmailRealTime):
             # 
             if placeholders:
                 placeholders[0].plotly_chart(fig, use_container_width=True)
-                placeholders[1].dataframe(df)
+                placeholders[1].dataframe(df.drop(columns=['cumulative_success_rate']))
                 
                 # cum_suc = recent_df.iloc[-1]['cumulative_success_rate']
                 moving_acc = recent_df.iloc[-1]['moving_acc']
