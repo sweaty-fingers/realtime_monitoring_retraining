@@ -1,3 +1,9 @@
+# 전체 과정 실행
+```bash
+python run_expriment.py
+```
+
+
 # 환경
 - Windows OS
 - python version 3.12.4
@@ -48,9 +54,8 @@ pipreqs {directory}
 pipreqs --encoding=utf8 {directory}
 ```
 
-# 전체 과정 실행
-```bash
-python run_expriment.py
-```
+# 재학습 데이터셋
+현재 노트북 환경에서 영상부터 모든 것을 실행하기에 무리가 있음으로 VOC 데이터셋 제외 CUSTOM 데이터 셋으로면 훈련.
+VOC 통합 데이터를 사용하려 한다면
 
-
+retraining/training/ 디렉터리에서 traininng_concated.py 파일을 training.py로 이름 바꾸기
