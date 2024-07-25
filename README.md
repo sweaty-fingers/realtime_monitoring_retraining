@@ -30,29 +30,29 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-# 실행 예시
+# 개별 파일 실행 예시
 
 Device에서 프로그램(segmentation)이 실행되고 있으며 일정 시간간격으로 서버에 데이터를 전달하는 상황 시뮬레이션 코드
-```cmd
+```bash
 # 실제 카메라 영상이 윈도우로 뜸
-python runnning_code\capture_images_with_window.py 
+python runnning_code/device_simulation.py 
 
 # 백그라운드에서만 실행
-python running_code\capture_images.py 
+python running_code/just_make_realtime_image.py 
 ```
 
 디바이스로부터 서버에 들어온 데이터 처리
-```cmd
-python running_code\make_log.py
+```bash
+python running_code/make_log.py
 ```
 
 대시보드 실행
-```cmd
+```bash
 streamlit run dashboard/app.py
 ```
 
 requirements.txt 생성
-```cmd
+```bash
 pip install pipreqs
 
 pipreqs {directory}
