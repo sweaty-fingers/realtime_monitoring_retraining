@@ -15,7 +15,7 @@ LOG_PATH = os.path.join(ROOT_DIR, "logs", "realtime_monitoring", "old_model_log.
 RETRAINING_SCRIPT_PATH = os.path.join(ROOT_DIR, "retraining", "training", "training.py")
 
 MAX_POINTS = 30
-ALERT_THRESHOLD = 0.95
+ALERT_THRESHOLD = 0.96
 MIN_EMAIL = 20
 
 def run_script(path):
@@ -52,7 +52,7 @@ class RealTimeSuccessRate(EmailRealTime):
             fig.add_shape(type="line", x0=recent_df['step'].iloc[0], y0=self.alert_threshold, x1=recent_df['step'].iloc[-1], y1=self.alert_threshold,
                         line=dict(color="Red", width=2, dash="dash"))
             
-            fig.update_layout(title='Cumulative Success Rate Over Recent Steps', xaxis_title='Step', yaxis_title='Cumulative Success Rate')
+            fig.update_layout(title='Accuracy (moving average) Over Recent Steps', xaxis_title='Step', yaxis_title='Accuracy')
             # 
             if placeholders:
                 placeholders[0].plotly_chart(fig, use_container_width=True)
