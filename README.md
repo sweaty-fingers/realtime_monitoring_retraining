@@ -1,6 +1,12 @@
 # 전체 과정 실행
 ```bash
 python run_expriment.py
+
+# 이전 로그 삭제
+python run_expriment.py --delete_logs
+
+# 실시간 비디오 실행
+python run_expriment.py --video
 ```
 
 
