@@ -8,10 +8,9 @@ import torch
 import torch.optim as optim
 import torch.nn.functional as F
 
-from torchvision import transforms
 from torch.utils.data import DataLoader, ConcatDataset, WeightedRandomSampler
-from torchvision.datasets import VOCSegmentation
-from retraining.data.custom_dataset import CustomDataset
+from retraining.data import CustomDataset, VOCSubset
+
 from retraining.models.torch.mobilenetv3 import ImageSegmenationMobilenetV3
 from retraining.models.torch.deeplabv3 import ImageSegmenationDeepLabV3
 
@@ -24,7 +23,9 @@ SAVE_MODEL_PATH = os.path.join(ROOT_DIR, "saved_models", "torch", "mobilenetv3_t
 COMPARING_SCRIPT_PATH = os.path.join(ROOT_DIR, "running_code", "compare_performance.py")
 
 MAX_EPOCH = 5
-
+CUSTOM_RATIO = 0.4
+VOC_RATIO = 1 - CUSTOM_RATIO
+BATCH_SIZE = 4
 
 def distillation_loss(student_outputs, teacher_outputs, targets, alpha=0.5, temperature=3.0):
     """
@@ -35,7 +36,6 @@ def distillation_loss(student_outputs, teacher_outputs, targets, alpha=0.5, temp
     alpha: CE loss와 distillation loss의 비율
     temperature: 온도 파라미터
     """
-    # targets = targets.squeeze(1)
     
     ce_loss = F.cross_entropy(student_outputs, targets)
 
@@ -49,12 +49,6 @@ def distillation_loss(student_outputs, teacher_outputs, targets, alpha=0.5, temp
     return alpha * ce_loss + (1 - alpha) * distillation_loss
 
 # 옵티마이저 설정
-
-def mask_transform(mask):
-    mask = transforms.Resize((256, 256))(mask)
-    mask = transforms.ToTensor()(mask)
-    return mask.long()
-
 def save_model(model, epoch, optimizer, path="model.pth"):
     # torch.save({
     #     'epoch': epoch,
@@ -69,28 +63,21 @@ def training(teacher_model, student_model):
 
     # 데이터 전처리
     custom_dataset = CustomDataset()
-    
-    # # VOC 데이터셋 로드 (예시)
-    # voc_dataset = VOCSegmentation(root='./data', year='2012', image_set='train', download=True, transform=custom_dataset.transform, target_transform=mask_transform)
-    # # 두 데이터셋을 결합
-    # combined_dataset = ConcatDataset([voc_dataset, custom_dataset])
-    # # 각 데이터셋의 비율 설정
-    # voc_ratio = 0.8
-    # custom_ratio = 0.2
+    voc_dataset = VOCSubset()
 
-    # # 각 데이터셋의 샘플링 비율 계산
-    # num_voc = len(voc_dataset)
-    # num_custom = len(custom_dataset)
-    # total_samples = num_voc + num_custom
-    # weights = [voc_ratio / num_voc] * num_voc + [custom_ratio / num_custom] * num_custom
+    combined_dataset = ConcatDataset([voc_dataset, custom_dataset])
+    # 각 데이터셋의 비율 설정
+    voc_ratio = 0.6
+    custom_ratio = 0.4
 
-    # # WeightedRandomSampler 생성
-    # sampler = WeightedRandomSampler(weights, num_samples=total_samples, replacement=True)
+    # 각 데이터셋의 샘플링 비율 계산
+    num_voc = len(voc_dataset)
+    num_custom = len(custom_dataset)
+    total_samples = num_voc + num_custom
+    weights = [voc_ratio / num_voc] * num_voc + [custom_ratio / num_custom] * num_custom
 
-    # # DataLoader 생성
-    # train_loader = DataLoader(combined_dataset, batch_size=8, sampler=sampler)
-    train_loader = DataLoader(custom_dataset, batch_size=8)
-    # train_loader = DataLoader(voc_dataset, batch_size=2, shuffle=True)
+    sampler = WeightedRandomSampler(weights, num_samples=total_samples, replacement=True)
+    train_loader = DataLoader(combined_dataset, batch_size=BATCH_SIZE, sampler=sampler)
 
     # 학습 루프
     # CSV 파일 초기화

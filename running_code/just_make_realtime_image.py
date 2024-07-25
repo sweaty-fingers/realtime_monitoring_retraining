@@ -21,7 +21,7 @@ cap = cv2.VideoCapture(0)
 # 캡처 간격 (초)
 capture_interval = 1
 # 최신 이미지를 유지할 개수
-latest_count = 20
+latest_count = 5
 
 def manage_images():
     # latest_dir에 있는 모든 이미지 파일 목록 가져오기

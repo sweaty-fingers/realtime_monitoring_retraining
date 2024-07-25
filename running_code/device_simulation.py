@@ -28,10 +28,11 @@ os.makedirs(seen_dir, exist_ok=True)
 # 캡처 간격 (초)
 capture_interval = 2
 # 최신 이미지를 유지할 개수
-latest_count = 20
+latest_count = 5
 
 # 필터 적용할 타켓 클래스
-TARGET_CLASSES = [i for i in range(1, 22)]
+# TARGET_CLASSES = [i for i in range(1, 22)]
+TARGET_CLASSES = [15]
 # 초기 필터 상태
 current_filter = 'Normal'
 

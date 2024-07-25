@@ -31,7 +31,6 @@ class RealTimeAccuracyComparison(EmailRealAB):
 
             if not df.empty:
                 recent_df = df.tail(self.max_points)
-                recent_df['compare'] = recent_df['new_accuracy'] > recent_df['old_accuracy']
                 fig = go.Figure()
 
                 # Clear existing traces
@@ -62,8 +61,7 @@ class RealTimeAccuracyComparison(EmailRealAB):
                             showlegend=False  # 레이블 표시 방지
                         ))
 
-                    # if recent_df['continual_success_count'].iloc[i] >= self.comparing_step and not self.email_sent:
-                    if recent_df['compare'].tail(self.comparing_step).sum() >= self.comparing_step and not self.email_sent:
+                    if recent_df['continual_success_count'].iloc[i] >= self.comparing_step and not self.email_sent:
                         self.send_email_alert('Model NEW', placeholder=placeholders[1])
 
                 fig.update_layout(title='Real-time Accuracy Comparison', xaxis_title='Time', yaxis_title='Accuracy')

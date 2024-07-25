@@ -17,7 +17,7 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DATA_DIR = os.path.join(ROOT_DIR, "captured_images")
 LOG_DIR = os.path.join(ROOT_DIR, "logs", "realtime_monitoring")
 
-SUCCESS_TRRESHOLD = 0.965
+SUCCESS_TRRESHOLD = 1
 TARGET_SIZE = (257, 257)
 
 class RealTimeSegmentation():

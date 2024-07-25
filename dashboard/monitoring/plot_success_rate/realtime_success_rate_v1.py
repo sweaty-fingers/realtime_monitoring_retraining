@@ -14,9 +14,9 @@ ROOT_DIR = str((Path(os.path.abspath(__file__)).parents[3]))
 LOG_PATH = os.path.join(ROOT_DIR, "logs", "realtime_monitoring", "old_model_log.csv")
 RETRAINING_SCRIPT_PATH = os.path.join(ROOT_DIR, "retraining", "training", "training.py")
 
-MAX_POINTS = 15
-ALERT_THRESHOLD = 1
-MIN_EMAIL = 3
+MAX_POINTS = 20
+ALERT_THRESHOLD = 0.95
+MIN_EMAIL = 10
 
 def run_script(path):
     with st.spinner("Running the script..."):
@@ -39,16 +39,10 @@ class RealTimeSuccessRate(EmailRealTime):
         
         if os.path.exists(self.log_path):
             df = pd.read_csv(self.log_path)
-            
-            # if len(df) > self.max_points:
-            df['moving_acc'] = df['accuracy'].rolling(window=self.max_points).mean()
-            df['moving_acc'] = df['moving_acc'].fillna(df['accuracy'].expanding().mean())
-            # else:
-            # df['moving_acc'] = df['accuracy'].expanding().mean()
-
             recent_df = df.tail(self.max_points)
             fig = go.Figure()
-            fig.add_trace(go.Scatter(x=recent_df['step'], y=recent_df['moving_acc'], mode='lines+markers', name='Cumulative Accuracy'))
+
+            fig.add_trace(go.Scatter(x=recent_df['step'], y=recent_df['cumulative_success_rate'], mode='lines+markers', name='Cumulative Success Rate'))
             fig.add_shape(type="line", x0=recent_df['step'].iloc[0], y0=self.alert_threshold, x1=recent_df['step'].iloc[-1], y1=self.alert_threshold,
                         line=dict(color="Red", width=2, dash="dash"))
             
@@ -58,10 +52,10 @@ class RealTimeSuccessRate(EmailRealTime):
                 placeholders[0].plotly_chart(fig, use_container_width=True)
                 placeholders[1].dataframe(df)
                 
-                # cum_suc = recent_df.iloc[-1]['cumulative_success_rate']
-                moving_acc = recent_df.iloc[-1]['moving_acc']
-                if moving_acc < self.alert_threshold and not self.email_sent and len(recent_df) > self.minumum_length_to_email:
-                    self.send_email_alert('Model A', moving_acc, placeholder=placeholders[2])
+                cum_suc = recent_df.iloc[-1]['cumulative_success_rate']
+                # moving_acc = recent_df
+                if cum_suc < self.alert_threshold and not self.email_sent and len(recent_df) > self.minumum_length_to_email:
+                    self.send_email_alert('Model A', cum_suc, placeholder=placeholders[2])
                     if not st.session_state.script_running:
                         st.session_state.script_running = True
                         script_thread = threading.Thread(target=run_script, args=(RETRAINING_SCRIPT_PATH,))
