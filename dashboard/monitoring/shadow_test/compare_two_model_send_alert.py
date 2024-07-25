@@ -17,6 +17,7 @@ COMPARING_SCRIPT_PATH = os.path.join(ROOT_DIR, "running_code", "compare_performa
 MAX_POINTS = 20
 COMPARING_STEPS = 3
 
+pd.options.mode.chained_assignment = None
 # 이메일 설정 (예시: Gmail을 사용하는 경우)
 class RealTimeAccuracyComparison(EmailRealAB):
     def __init__(self):

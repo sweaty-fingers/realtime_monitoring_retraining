@@ -105,6 +105,8 @@ class RealTimeSuccessRate(EmailRealTime):
                         
                     else:
                         st.session_state.script_running = False
+                        # self.script_thread.join()
+                        placeholder4.write("Allow retraining")
 
                 while True:
                     self.display_comparison_results(placeholders=[placeholder1, placeholder2, placeholder3, placeholder4])
