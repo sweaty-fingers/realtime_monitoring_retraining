@@ -34,7 +34,7 @@ class RealTimeSuccessRate(EmailRealTime):
         self.alert_threshold = ALERT_THRESHOLD
         self.email_sent = False
         self.retraining_path = RETRAINING_SCRIPT_PATH
-        self.script_thread = None
+        # self.script_thread = None
     
 
     def display_comparison_results(self, placeholders=None):
@@ -66,8 +66,8 @@ class RealTimeSuccessRate(EmailRealTime):
                     self.send_email_alert('Model A', moving_acc, placeholder=placeholders[2])
                     if not st.session_state.script_running:
                         st.session_state.script_running = True
-                        self.script_thread = threading.Thread(target=run_script, args=(RETRAINING_SCRIPT_PATH,))
-                        self.script_thread.start()
+                        script_thread = threading.Thread(target=run_script, args=(RETRAINING_SCRIPT_PATH,))
+                        script_thread.start()
                         placeholders[3].write("Start Retraining...")
                     else:
                         placeholders[3].warning("Script is already running.")
@@ -99,14 +99,14 @@ class RealTimeSuccessRate(EmailRealTime):
                 if st.sidebar.button("Acknowledge Alert"):
                     self.email_sent = False
 
-                if st.sidebar.button("Allow additional retraining"):
-                    if self.script_thread.is_alive():
-                        placeholder4.warning("Script is still running.")
+                # if st.sidebar.button("Allow additional retraining"):
+                #     if self.script_thread.is_alive():
+                #         placeholder4.warning("Script is still running.")
                         
-                    else:
-                        st.session_state.script_running = False
-                        # self.script_thread.join()
-                        placeholder4.write("Allow retraining")
+                #     else:
+                #         st.session_state.script_running = False
+                #         # self.script_thread.join()
+                #         placeholder4.write("Allow retraining")
 
                 while True:
                     self.display_comparison_results(placeholders=[placeholder1, placeholder2, placeholder3, placeholder4])
