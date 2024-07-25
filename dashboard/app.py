@@ -18,10 +18,10 @@ def main():
 
     # Add all your application here
     app.add_app("Home", home.app)
+    app.add_app("Result Comparison", ImageComparator().app)
     app.add_app("Real-Time Graph", RealTimeSuccessRate().app)
     app.add_app("Real-Time Loss", RealTimeLoss().app)
     app.add_app("Real-Time Shadow Test", RealTimeAccuracyComparison().app)
-    app.add_app("Result Comparison", ImageComparator().app)
     # The main app
     app.run()
 
