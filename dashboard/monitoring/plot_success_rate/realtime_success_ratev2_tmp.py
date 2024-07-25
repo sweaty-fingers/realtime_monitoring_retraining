@@ -56,7 +56,7 @@ class RealTimeSuccessRate(EmailRealTime):
             # 
             if placeholders:
                 placeholders[0].plotly_chart(fig, use_container_width=True)
-                placeholders[1].dataframe(recent_df.drop(columns=['cumulative_success_rate']).iloc[::-1])
+                placeholders[1].dataframe(df.drop(columns=['cumulative_success_rate']))
                 
                 # cum_suc = recent_df.iloc[-1]['cumulative_success_rate']
                 moving_acc = recent_df.iloc[-1]['moving_acc']
@@ -92,6 +92,21 @@ class RealTimeSuccessRate(EmailRealTime):
                 if st.sidebar.button("Acknowledge Alert"):
                     self.email_sent = False
 
+                # if st.sidebar.button("Threshold"):
+                input_value = st.sidebar.text_input("Set threhold value to change", value=str(self.alert_threshold))
+                
+                if st.sidebar.button("Update threshold Variable"):
+                    if is_float(input_value):
+                        new_value = float(input_value)
+                        if new_value % 1 != 0:  # 소수인지 확인
+                            self.alert_threshold = new_value
+                            st.sidebar.success(f"Variable updated to: {self.alert_threshold}")
+                        else:
+                            st.sidebar.error("The input is not a decimal number.")
+                    else:
+                        st.sidebar.error("Invalid input. Please enter a valid decimal number.")
+
+
                 placeholder1 = st.empty()
                 placeholder2 = st.empty()
                 placeholder3 = st.empty()
@@ -101,7 +116,12 @@ class RealTimeSuccessRate(EmailRealTime):
                     time.sleep(1)
 
     
-
+def is_float(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
 
 # if __name__ == '__main__':
 #     seg = RealTimeSegmentation()
