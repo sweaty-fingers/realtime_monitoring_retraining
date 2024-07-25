@@ -15,7 +15,7 @@ LOG_PATH = os.path.join(ROOT_DIR, "logs", "realtime_monitoring", "old_model_log.
 RETRAINING_SCRIPT_PATH = os.path.join(ROOT_DIR, "retraining", "training", "training.py")
 
 MAX_POINTS = 30
-ALERT_THRESHOLD = 0.97
+ALERT_THRESHOLD = 0.96
 MIN_EMAIL = 20
 
 def run_script(path):
@@ -34,8 +34,6 @@ class RealTimeSuccessRate(EmailRealTime):
         self.alert_threshold = ALERT_THRESHOLD
         self.email_sent = False
         self.retraining_path = RETRAINING_SCRIPT_PATH
-        self.script_thread = None
-    
 
     def display_comparison_results(self, placeholders=None):
         
@@ -66,11 +64,11 @@ class RealTimeSuccessRate(EmailRealTime):
                     self.send_email_alert('Model A', moving_acc, placeholder=placeholders[2])
                     if not st.session_state.script_running:
                         st.session_state.script_running = True
-                        self.script_thread = threading.Thread(target=run_script, args=(RETRAINING_SCRIPT_PATH,))
-                        self.script_thread.start()
-                        placeholders[3].write("Start Retraining...")
+                        script_thread = threading.Thread(target=run_script, args=(RETRAINING_SCRIPT_PATH,))
+                        script_thread.start()
+                        st.write("Start Retraining...")
                     else:
-                        placeholders[3].warning("Script is already running.")
+                        st.warning("Script is already running.")
                                 
             else:
                 # st.plotly_chart(fig)
@@ -91,28 +89,18 @@ class RealTimeSuccessRate(EmailRealTime):
         if page == "Real-time Monitoring":
             st.sidebar.title("Data Source Selection")
             if st.sidebar.button("Update"):
-                placeholder1 = st.empty()
-                placeholder2 = st.empty()
-                placeholder3 = st.empty()
-                placeholder4 = st.empty()
-
                 if st.sidebar.button("Acknowledge Alert"):
                     self.email_sent = False
 
-                if st.sidebar.button("Allow additional retraining"):
-                    if self.script_thread.is_alive():
-                        placeholder4.warning("Script is still running.")
-                        
-                    else:
-                        st.session_state.script_running = False
+                placeholder1 = st.empty()
+                placeholder2 = st.empty()
+                placeholder3 = st.empty()
 
                 while True:
-                    self.display_comparison_results(placeholders=[placeholder1, placeholder2, placeholder3, placeholder4])
+                    self.display_comparison_results(placeholders=[placeholder1, placeholder2, placeholder3])
                     time.sleep(1)
 
     
-
-
 # if __name__ == '__main__':
 #     seg = RealTimeSegmentation()
 #     seg.update_data()

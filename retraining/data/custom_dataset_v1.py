@@ -19,17 +19,13 @@ ROOT_DIR = str((Path(os.path.abspath(__file__)).parents[2]))
 LOG_PATH = os.path.join(ROOT_DIR, "logs", "realtime_monitoring", "old_model_log.csv")
 
 class CustomDataset(Dataset):
-    def __init__(self, log_path=None, transform=None, target_transform=None, subset_size=5):
+    def __init__(self, log_path=None, transform=None, target_transform=None):
         self.log_path = log_path
         if self.log_path is None:
             self.log_path = log_path
 
         df = pd.read_csv(LOG_PATH)
         self.log_df = df[df['fail'] == 1]
-        if self.log_df.empty:
-            self.log_df = df[df['success'] == 1] 
-
-        self.log_df = self.log_df.tail(subset_size)
 
         self.image_paths = self.log_df['original_image_path'].tolist()
         self.mask_paths = self.log_df['true_mask_image_path'].tolist()

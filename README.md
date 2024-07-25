@@ -61,7 +61,5 @@ pipreqs --encoding=utf8 {directory}
 ```
 
 # 재학습 데이터셋
-현재 노트북 환경에서 영상부터 모든 것을 실행하기에 무리가 있음으로 VOC 데이터셋 제외 CUSTOM 데이터 셋으로면 훈련.
-VOC 통합 데이터를 사용하려 한다면
-
-retraining/training/ 디렉터리에서 traininng_concated.py 파일을 training.py로 이름 바꾸기
+현재 노트북 환경에서 영상부터 모든 것을 실행하기에 무리가 있음으로 custom 데이터셋과 voc 데이터셋의 수를 5개씩으로 제한
+이를 없애려면 subset_size 파라미터 변경
