@@ -5,6 +5,7 @@ from home import home
 from monitoring.plot_success_rate import RealTimeSuccessRate
 from monitoring.training_graph import RealTimeLoss
 from monitoring.result_comparison import ImageComparator
+from monitoring.result_comparison import ImageComparatorHistory
 from monitoring.shadow_test import RealTimeAccuracyComparison
 
 def main():
@@ -22,6 +23,7 @@ def main():
     app.add_app("Real-Time Graph", RealTimeSuccessRate().app)
     app.add_app("Real-Time Loss", RealTimeLoss().app)
     app.add_app("Real-Time Shadow Test", RealTimeAccuracyComparison().app)
+    app.add_app("Result Comparison history", ImageComparatorHistory().app)
     # The main app
     app.run()
 

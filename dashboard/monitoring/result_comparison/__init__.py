@@ -1,1 +1,2 @@
 from .image_comparison_slider import ImageComparator
+from .image_comparison_slider_history import ImageComparatorHistory

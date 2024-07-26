@@ -10,6 +10,9 @@ python run_expriment.py --video
 ```
 
 # Nevigation
+## Result Comparison
+실시간 데이터에 대해서 디바이스 모델과 고성능 모델의 segmentation 결과 비교
+
 ## Real-Time Graph
 실시간 모델(디바이스) 성능 그래프
 
@@ -19,8 +22,8 @@ python run_expriment.py --video
 ## Real-Time Shadow Test
 재학습된 모델과 이전 모델의 성능을 새롭게 들어온 데이터에 대해서 비교
 
-## Result Comparison
-실시간 데이터에 대해서 디바이스 모델과 고성능 모델의 segmentation 결과 비교
+## Result Comparison History
+수집된 데이터에 대해서 디바이스 모델과 고성능 모델의 segmentation 결과 비교 
 
 
 # 환경
