@@ -23,7 +23,7 @@ python run_expriment.py --video
 재학습된 모델과 이전 모델의 성능을 새롭게 들어온 데이터에 대해서 비교
 
 ## Result Comparison History
-수집된 데이터에 대해서 디바이스 모델과 고성능 모델의 segmentation 결과 비교 
+수집된 데이터에 대해서 디바이스 모델과 고성능 모델의 segmentation 결과 비교 (현재는 최근 200까지)
 
 
 # 환경

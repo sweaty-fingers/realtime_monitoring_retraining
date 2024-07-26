@@ -13,7 +13,7 @@ ROOT_DIR = str((Path(os.path.abspath(__file__)).parents[3]))
 LOG_PATH = os.path.join(ROOT_DIR, "logs", "realtime_monitoring", "old_model_log.csv")
 
 class ImageComparatorHistory:
-    def __init__(self, df_path: pd.DataFrame = None, max_points=20):
+    def __init__(self, df_path: pd.DataFrame = None, max_points=100):
         # if df_path is None:
         if df_path is None:
             df_path = LOG_PATH
@@ -26,6 +26,7 @@ class ImageComparatorHistory:
                 self.df = None
             
         self.max_points = max_points
+        self.df = self.df.tail(self.max_points)
         # self.current_index = 0
 
     def display_images(self):
