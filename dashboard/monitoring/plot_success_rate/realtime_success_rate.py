@@ -36,7 +36,6 @@ class RealTimeSuccessRate(EmailRealTime):
         self.retraining_path = RETRAINING_SCRIPT_PATH
         # self.script_thread = None
     
-
     def display_comparison_results(self, placeholders=None):
         
         if os.path.exists(self.log_path):

@@ -22,7 +22,7 @@ TE_MODEL_PATH = os.path.join(ROOT_DIR, "saved_models", "torch", "deeplabv3.pth")
 SAVE_MODEL_PATH = os.path.join(ROOT_DIR, "saved_models", "torch", "mobilenetv3_tmp.pth")
 COMPARING_SCRIPT_PATH = os.path.join(ROOT_DIR, "running_code", "compare_performance.py")
 
-MAX_EPOCH = 5
+MAX_EPOCH = 20
 CUSTOM_RATIO = 0.4
 VOC_RATIO = 1 - CUSTOM_RATIO
 BATCH_SIZE = 4
